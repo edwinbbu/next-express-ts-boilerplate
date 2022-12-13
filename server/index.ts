@@ -10,13 +10,20 @@ const port = process.env.PORT || 3000;
   try {
     await app.prepare();
     const server = express();
+
+    server.get("/api", (req, res)=>{
+      res.send("hello")
+    })
+
     server.all("*", (req: Request, res: Response) => {
       return handle(req, res);
     });
+
     server.listen(port, (err?: any) => {
       if (err) throw err;
       console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);
     });
+
   } catch (e) {
     console.error(e);
     process.exit(1);
